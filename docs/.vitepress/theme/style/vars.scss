@@ -1,0 +1,126 @@
+//rainbow.scss中一共定义了 82 种颜色，颜色过度时间为 40s，过渡时间可以后续在使用的地方进行动态更改
+
+:root {
+    --vp-c-default-1: var(--vp-c-gray-1);
+    --vp-c-default-2: var(--vp-c-gray-2);
+    --vp-c-default-3: var(--vp-c-gray-3);
+    --vp-c-default-soft: var(--vp-c-gray-soft);
+
+    // 用于主品牌颜色，如链接文本、按钮、品牌主题等。
+    --vp-c-brand-1: var(--vp-c-indigo-1);
+    --vp-c-brand-2: var(--vp-c-indigo-2);
+    --vp-c-brand-3: var(--vp-c-indigo-3);
+    --vp-c-brand-soft: var(--vp-c-indigo-soft);
+
+    --vp-c-tip-1: var(--vp-c-brand-1);
+    --vp-c-tip-2: var(--vp-c-brand-2);
+    --vp-c-tip-3: var(--vp-c-brand-3);
+    --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+    --vp-c-warning-1: var(--vp-c-yellow-1);
+    --vp-c-warning-2: var(--vp-c-yellow-2);
+    --vp-c-warning-3: var(--vp-c-yellow-3);
+    --vp-c-warning-soft: var(--vp-c-yellow-soft);
+
+    --vp-c-danger-1: var(--vp-c-red-1);
+    --vp-c-danger-2: var(--vp-c-red-2);
+    --vp-c-danger-3: var(--vp-c-red-3);
+    --vp-c-danger-soft: var(--vp-c-red-soft);
+
+    --vp-c-gutter: var(--vp-c-divider);
+    --vp-code-block-bg: rgba(125, 125, 125, 0.04);
+    --vp-code-tab-divider: var(--vp-c-divider);
+    --vp-code-copy-code-bg: rgba(125, 125, 125, 0.1);
+    --vp-code-copy-code-hover-bg: rgba(125, 125, 125, 0.2);
+    --vp-c-disabled-bg: rgba(125, 125, 125, 0.2);
+    --vp-code-tab-text-color: var(--vp-c-text-2);
+    --vp-code-tab-active-text-color: var(--vp-c-text-1);
+    --vp-code-tab-hover-text-color: var(--vp-c-text-1);
+    --vp-code-copy-code-active-text: var(--vp-c-text-2);
+    --vp-c-text-dark-3: rgba(56, 56, 56, 0.8);
+    --vp-c-brand-lightest: var(--vp-c-brand-1);
+
+    --vp-c-highlight-bg: var(--vp-c-brand-light);
+    --vp-c-highlight-text: var(--vp-c-bg);
+}
+
+.dark {
+    --vp-code-block-bg: rgba(0, 0, 0, 0.2);
+    --vp-c-text-code: #c0cec0;
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+:root {
+    --vp-button-brand-border: var(--vp-c-brand-light);
+    --vp-button-brand-text: var(--vp-c-white);
+    --vp-button-brand-bg: var(--vp-c-brand-1);
+    --vp-button-brand-hover-border: var(--vp-c-brand-light);
+    --vp-button-brand-hover-text: var(--vp-c-white);
+    --vp-button-brand-hover-bg: var(--vp-c-brand-light);
+    --vp-button-brand-active-border: var(--vp-c-brand-light);
+    --vp-button-brand-active-text: var(--vp-c-white);
+    --vp-button-brand-active-bg: var(--vp-button-brand-bg);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+:root {
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(
+        120deg,
+        var(--vp-c-brand-1) 30%,
+        var(--vp-c-brand-next)
+    );
+    --vp-home-hero-image-background-image: linear-gradient(
+        -45deg,
+        var(--vp-c-brand-1) 30%,
+        var(--vp-c-brand-next)
+    );
+    --vp-home-hero-image-filter: blur(80px);
+}
+
+@media (min-width: 640px) {
+    :root {
+        --vp-home-hero-image-filter: blur(120px);
+    }
+}
+
+@media (min-width: 960px) {
+    :root {
+        --vp-home-hero-image-filter: blur(120px);
+    }
+}
+
+/* Safari has a very bad performance on gradient and filter */
+.browser-safari,
+.browser-firefox {
+    --vp-home-hero-image-background-image: transparent;
+    --vp-home-hero-image-filter: '';
+}
+
+/**
+ * Component: Custom Block
+ * -------------------------------------------------------------------------- */
+:root {
+    --vp-custom-block-tip-border: var(--vp-c-brand-1);
+    --vp-custom-block-tip-text: var(--vp-c-brand-darker);
+    --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);
+}
+.dark {
+    --vp-custom-block-tip-border: var(--vp-c-brand-1);
+    --vp-custom-block-tip-text: var(--vp-c-brand-lightest);
+    --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);
+}
+
+/**
+ * Component: Algolia
+ * -------------------------------------------------------------------------- */
+.DocSearch {
+    --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+:root.dark {
+    --vp-c-brand-2: var(--vp-c-brand-light);
+}
