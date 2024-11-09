@@ -3,7 +3,7 @@ import { watch } from 'vue'
 import type { EnhanceAppContext, Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style/index.scss'
-import Layout from './Layout/Index.vue'
+import Layout from './Layout/index.vue'
 let homePageStyle: HTMLStyleElement | undefined
 
 export default {
