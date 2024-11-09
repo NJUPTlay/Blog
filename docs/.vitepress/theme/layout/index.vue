@@ -1,4 +1,4 @@
-<!-- .vitepress/theme/Layout/index.vue -->
+<!-- .vitepress/theme/layout/index.vue -->
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
