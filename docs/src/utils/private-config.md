@@ -5,6 +5,9 @@
 
 ## 配置项内容概括
 配置项内容分为四个部分:browserConfig,mainPageConfig,customOtherConfig,loginPageConfig
++ mainPageConfig 配置项内容是产品主页面配置项 可以去隐藏路由 (通过filter)
++ headerConfig 配置项内容是产品主页面头部配置项 包裹页面图标样式大小等 以及突出路由
++ customOtherConfig 配置项内容是产品自定义配置项 包括自定义的js和css的注入
 当然针对于每个产品的配置项内容都是不一样的, 根据自己的需求去实现想用的内容即可
 各个产品都有各自对应的属性键值来控制内容 在k8s上部署 根据ConfigMap.yaml 内容来查看 
 
@@ -13,6 +16,7 @@
 
 ## _VERSION.js
 在ci.yml中配置不同的脚本指令
+部分产品是根据“产品版本对应的代码版本分支”进行交付.产品静态文件_VERSION.js 记录该产品的产品版本信息和前端构建时间和构建流水线
 
 ```md
 生成版本文件
@@ -23,6 +27,7 @@ echo "$build_type" >>output/_VERSION.js # default | legacy, default未解决浏�
 ```
 
 ## 关于低版本浏览器的兼容
+私有化交付的在客户低版本浏览器哈上会报错(浏览器版本较低,不支持部分ES6语法)
 ### cra
 react-app-polyfill
 需要在代码主入口首行添加 需要需要的垫片 同时类似 css-aufofixer 更改browerlist配置 明确支持的浏览器版本 
