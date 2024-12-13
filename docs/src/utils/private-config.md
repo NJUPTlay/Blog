@@ -1,4 +1,5 @@
 # private-config.js 配置项使用说明
+private-config文件，存储的是大数据私有化产品的配置信息，包括文案、链接、图片地址等。其中包括有很多客户侧自配置的语料
 ## 技术实验原理说明
 + html文件优先加载并执行 private-config.js 文件, 往全局 window 对象添加 PRIVATE_STATIC
 + 通过更改 window.PRIVATE_STATIC 对象属性值, 达到修改配置项的目的
