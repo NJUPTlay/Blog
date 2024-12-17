@@ -244,8 +244,50 @@ Esbuild的转译 transform、transfromSync
 
 
 ## Webpack
-webpack项目冷启动时必须递归打包整个项目的依赖书，
+一切皆模版,在 webpack 中模版是其处理的基本单元 包裹但不限于js文件 而对于非 Js 模块就需要通过合适 loader 来进行处理 这样 webpack 就可以以一种统一的方式跟踪并且构建各个模块之间的依赖关系
+webpack 配置的核心概念 包裹 entry、output、loader、plugin、mode等等 
+webpack项目冷启动时必须递归打包整个项目的依赖树，javascript语言本身的性能性质，在构建中遇到瓶颈
+但是Webpack保持着不可替代的地位，主要得益于其优秀的灵活性和强大的生态系统
 
-Webpack保持着不可替代的地位，主要得益于其优秀的灵活性和强大的生态系统
+下面以create-react-app的webpack为例分析
+### loader
+在 module 的配置项中,使用了 `oneof`的参数,提高 loader 匹配效率 匹配到一个 loader后,就不会再继续后面的匹配了
+比较可以关注的点是 `css-loader` 的使用,在最外层定义了相关的匹配规则的正则,同时还在外层定义一个`getStyleLoaders`方法(接受两个参数: 一个是`css-loader`的配置参数,另一个是补充额外的loader)
+`getStyleLoaders` 
+开发模式采用的是`style-loader` 是将 CSS 样式以<style>标签的形式注入到 HTML 页面中，使得在开发过程中能够实时看到样式的效果
+而生产模式则是采用的`MiniCssExtractPlugin.loader`生产独立的css文件
+添加`css-loader`，它主要负责解析 css 文件中的@import和url()等语句，将 CSS 文件转换为可以被 JavaScript 处理的模块形式。同时这里传入了`cssOptions`参数
+添加`postcss-loader` 自动补签css3前缀适配浏览器(需要在packjson.json中去指定支持情况)
+如果传入的额外的`preProcessor`就 push 到 loader 一般是less和scss
+ `css-loader` 的 `importLoaders` 属性是针对于通过 @import 引入的 css，告诉它还需要走几个 loader 才能到 `style-loader`
+比如引入了 `sass-loader` 前面还有3个 loader 需要执行 同样的当 importLoaders=1 时就意味着再执行一个`css-loader` 即可
 
-javascript语言本身的性能性质，在构建中遇到瓶颈
+### plugins
+`plugins` 选项中放置了项目中用到的所有的插件 
+
++ `HtmlWebpackPlugin`该插件主要用于自动生成 HTML 文件，并将 webpack 打包后的 JavaScript、CSS 等资源文件自动引入到生成的 html文件中 minify中可以加一些对于html的优化配置
++ `MiniCssExtractPlugin`抽离css 单独打包css文件
++ `ManifestPlugin`生成一份资源文件的 json 文件 即 chunks 插入到 html 中的地址，与 chunks 一一对应
+此外还做了一些环境变量的注入、忽略打包第三方库、TypeScript类型异步检查、React组件热更新、处理文件路径大小写
+
+### 题外话
+下面是自己在学习webpack的总结思考
+#### 文件指纹(hash)
+目前对于文件名称的hash方式主要是三种 `hash`、`contenthash`、`chunkhash`
+`hash`全局的 只要有任意一处发生了变化 所有hash命名的文件都将更新hash名称 缓存失效
+`contenthash` 顾名思义就是根据文件的内容来生产hash值 有当文件自身内容发生变化时，其`contenthash`值才会改变 一般来说是给css文件来使用()
+`chunkhash`是针对于代码块的hash 代码块通常是由 webpack 根据 entry 和代码分割（code splitting）规则生成的 比如多页面应用下的多个入口 为了使不同入口文件代码块不相互影响就可以采用 `chunkhash`
+
+#### loader 和 plugins
+`loader`: webpack将一切文件视为模块，但是webpack原生是只能解析js文件，loader就是来处理各种类型的文件 将非 JavaSript 文件转为 webpack 能够识别和处理的模块 比如对 css、文字、图片的处理
+`plugins` 用来拓展 webpack 的功能,让 webpack 具有更多的灵活性 比如代码压缩、代码切割、环境注入、提取公共代码等等 
+
+#### webpack 一些打包优化 
+提取公共资源(多次引用的common代码)
+CDN 加载第三方依赖(externals 配合cdn)
+`Tree shaking`来删除不必要代码
+
+#### webpack 中的动态 import 和 Vite 的冷启动的按需加载的区分
+以前一直以为它们是按需加载 没有理解区分 实际上是两个完全不一样的概念
+动态`import`  实际就是赖加载的一种方式 当 webpack 打包发现代码里有动态 import() 的语法，就会将引用的组件打包出js，当需要时才会加载该组件的js
+`Vite`的冷启动 导致其在开发模式下是只编译不打包的(这里webpack就是递归整个依赖树 然后打包出文件) 在运行时基于浏览器的原生的ES模块支持 遇到相应的import依赖 就会去请求对应的内容
