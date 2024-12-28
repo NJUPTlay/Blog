@@ -178,10 +178,10 @@ optimizeDeps: {
 
 如果其中部分依赖没有ESM，就会导致运行失败。
 
-![图12](https://cdn.nlark.com/yuque/0/2024/png/33937613/1722424682604-37790c40-efe1-4c98-ad3a-b4e194b9eb6b.png)
-![图13](https://cdn.nlark.com/yuque/0/2024/png/33937613/1722424685716-402a0224-2e28-4b6b-b323-e290472479f7.png)
+![图12](/exclude-react.png)
+![图13](/node_module-reactError.png)
 
-![图14](https://cdn.nlark.com/yuque/0/2024/png/33937613/1722424772648-55a51a4b-e5d4-4916-9626-67d7015a9fee.png)
+![图14](/include-modules.png)
 
 ##### 自定义Esbuild
 
@@ -217,7 +217,7 @@ Esbuild的转译 transform、transfromSync
 
 热更新的机制，Vite开发服务器使用Node.js的文件系统的API（fs.watch）或者其他的监听工具，监控文件的更改。检测到相应的变化就通过websocket推送消息到浏览器，浏览器收到通知，会进行相应的操作。
 
-![图15](https://cdn.nlark.com/yuque/0/2024/png/33937613/1723121240969-16da3018-6223-4a5e-b003-126790a3ceb4.png)
+![图15](/hmr-websocket.png)
 
 在没有import.meta.hot（仅用在开发模式下）不会渲染整个页面
 
@@ -225,9 +225,9 @@ Esbuild的转译 transform、transfromSync
 
 另外增加条件守卫之后，打包时识别到 if 条件不成立，会自动把这部分代码从打包产物中移除，来优化资源体积。因此，我们需要增加这个条件守卫语句
 
-![图17](https://cdn.nlark.com/yuque/0/2024/png/33937613/1723121511577-b5c44c4e-9d26-46ee-85af-ac641f0ee60f.png)
-![图18](https://cdn.nlark.com/yuque/0/2024/png/33937613/1723121539323-beb455d0-1c27-4014-8941-a95a496755bc.png)
-![图19](https://cdn.nlark.com/yuque/0/2024/png/33937613/1723121562682-a2e9bedc-1535-4ebf-a96f-eaaad244007d.png)
+![图17](/hmr1.png)
+![图18](/hmr2.png)
+![图19](/hmr3.png)
 
  即使只是添加了注释，Vite 仍会检测到文件的变化，并重新连接 WebSocket。这是 Vite 开发模式中的正常行为，目的是确保每次文件变更后，浏览器能够准确接收到更新。  
 
