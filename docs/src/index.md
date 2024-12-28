@@ -13,16 +13,16 @@ hero:
   actions:
     - theme: brand
       text: About Me
-      link: /aboutme
+      link: /Aboutme
     - theme: alt
       text: My Notes
-      link: /Notes/JavaScript/11
+      link: /Notes/JavaScript/模块化规范
 
 features:
   - icon: 📖
     title: Notes
     details: My Daily Notes
-    link: /Notes/JavaScript/11
+    link: /Notes/JavaScript/模块化规范
     linkText: 个人笔记
   - icon: 📖
     title: 八股与面经
