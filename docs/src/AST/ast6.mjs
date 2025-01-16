@@ -35,7 +35,6 @@ const eslintPlugin=({fix})=>{
         },
         post(file){
             console.log(...file.get('errors'));
-            
         },
     }
 }
